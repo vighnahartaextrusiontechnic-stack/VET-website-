@@ -1,0 +1,85 @@
+import { SiteLayout } from "@/components/site-layout";
+import contactBreadcrumbImg from "@/assets/breadcrumb/contact.png";
+import { AlertTriangle, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { useState } from "react";
+import { company } from "@/content/extrusion";
+
+export default function ContactPage() {
+  const [sent, setSent] = useState(false);
+  return (
+    <SiteLayout>
+      <section className="bg-background">
+        <img
+          src={contactBreadcrumbImg}
+          alt="Contact Vighnaharta Enterprise"
+          className="block w-full object-cover"
+          width={1920}
+          height={500}
+        />
+      </section>
+
+      <section className="py-20">
+        <div className="container-x grid lg:grid-cols-[1.3fr_1fr] gap-10">
+          <div className="bg-card border border-border rounded-xl p-5 shadow-sm sm:p-7">
+            <h2 className="text-2xl font-bold text-brand">Send us an inquiry</h2>
+            {sent ? (
+              <div className="mt-6 rounded-lg bg-safety/10 border border-safety/30 p-6">
+                <h3 className="font-bold text-brand">Thank you, message received.</h3>
+                <p className="mt-1 text-sm text-muted-foreground">Our team will review your extrusion requirement and contact you soon.</p>
+              </div>
+            ) : (
+              <form className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+                <input required maxLength={100} placeholder="Full name *" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
+                <input required maxLength={150} placeholder="Company" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
+                <input required type="email" maxLength={255} placeholder="Email *" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
+                <input required maxLength={20} placeholder="Phone *" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
+                <select className="sm:col-span-2 rounded-md border border-border bg-background px-4 py-2.5 text-sm">
+                  <option>I am interested in (select)</option>
+                  <option>3-layer pipe automatic machine setup</option>
+                  <option>Extrusion machine spares</option>
+                  <option>Post-extrusion machine spares</option>
+                  <option>VTD die head</option>
+                  <option>Calibration support</option>
+                  <option>Process troubleshooting</option>
+                  <option>High-endurance die heads</option>
+                  <option>Screw barrel set</option>
+                  <option>Heavy-duty traction chains and rubber pads</option>
+                  <option>Smart PLC automation and remote support</option>
+                  <option>Panel modification</option>
+                  <option>Raw material and wax composition support</option>
+                </select>
+                <textarea required maxLength={1000} rows={4} placeholder="Tell us your model, pipe type, output target or process problem *" className="sm:col-span-2 rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
+                <button className="sm:col-span-2 rounded-md bg-safety px-4 py-3 text-sm font-semibold text-safety-foreground hover:brightness-110">Send inquiry</button>
+              </form>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-card border border-border rounded-xl p-6">
+              <h3 className="font-bold text-brand">Office</h3>
+              <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
+                <li className="flex gap-3"><MapPin className="h-4 w-4 text-safety mt-0.5 shrink-0" />{company.address}</li>
+                <li className="flex gap-3"><Phone className="h-4 w-4 text-safety mt-0.5 shrink-0" /><a href={`tel:${company.phone.replace(/\s/g, "")}`} className="hover:text-brand">{company.phone}</a></li>
+                <li className="flex gap-3"><Mail className="h-4 w-4 text-safety mt-0.5 shrink-0" /><a href={`mailto:${company.email}`} className="hover:text-brand">{company.email}</a></li>
+                <li className="flex gap-3"><Clock className="h-4 w-4 text-safety mt-0.5 shrink-0" />Mon-Sat, 9:30 AM - 6:30 PM</li>
+              </ul>
+            </div>
+            <div className="rounded-xl border border-safety/40 bg-safety/10 p-5 sm:p-6">
+              <div className="flex items-center gap-2 text-brand font-bold"><AlertTriangle className="h-5 w-5 text-safety" /> Process Support</div>
+              <p className="mt-2 text-sm text-muted-foreground">Any problem in your extrusion process? Talk to us and our expert team will suggest the best solution for you.</p>
+              <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="mt-3 inline-block font-display text-xl font-bold text-brand sm:text-2xl">{company.phone}</a>
+            </div>
+            <div className="bg-card border border-border rounded-xl p-6">
+              <h3 className="font-bold text-brand">Useful details to share</h3>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                <li>Machine model and screw type</li>
+                <li>Pipe type, pipe range and output target</li>
+                <li>Spare part, die-head, screw barrel, automation or panel modification requirement</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </SiteLayout>
+  );
+}

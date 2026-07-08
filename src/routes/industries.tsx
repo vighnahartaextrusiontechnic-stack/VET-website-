@@ -27,7 +27,7 @@ export default function IndustriesPage() {
           height={500}
         />
       </section>
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {SECTORS.map((s) => (
             <div key={s.n} className="bg-card border border-border rounded-xl p-6 hover:border-safety hover:shadow-xl transition">

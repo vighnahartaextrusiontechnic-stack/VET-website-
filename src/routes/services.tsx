@@ -25,7 +25,7 @@ export default function ServicesPage() {
           height={500}
         />
       </section>
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid md:grid-cols-2 gap-6">
           {SVCS.map((s) => (
             <div key={s.t} className="bg-card border border-border rounded-xl p-7 hover:shadow-xl hover:-translate-y-1 transition">
@@ -39,11 +39,11 @@ export default function ServicesPage() {
           ))}
         </div>
       </section>
-      <section className="py-20 bg-secondary">
+      <section className="py-12 md:py-16 bg-secondary">
         <div className="container-x">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Additional 2026 Services</p>
           <h2 className="mt-3 text-3xl md:text-4xl font-bold text-brand">Plant improvement and support additions.</h2>
-          <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {productLineup2026.filter((item) => ["Smart Automation & Remote Support", "Efficiency Tools", "Panel Modification", "Advanced Raw Materials"].includes(item.title)).map((item) => (
               <div key={item.title} className="bg-card border border-border rounded-xl p-6 last:lg:col-start-2">
                 <h3 className="font-bold text-brand">{item.title}</h3>

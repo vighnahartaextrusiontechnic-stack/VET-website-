@@ -17,8 +17,8 @@ export default function AboutPage() {
           height={500}
         />
       </section>
-      <section className="py-20">
-        <div className="container-x grid lg:grid-cols-2 gap-12 items-center">
+      <section className="py-12 md:py-16">
+        <div className="container-x grid gap-8 lg:grid-cols-2 lg:gap-10 items-center">
           <div className="overflow-hidden rounded-xl border border-border bg-white p-1 shadow-2xl sm:p-2">
             <img
               src={machineImg}
@@ -38,7 +38,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-secondary">
+      <section className="py-12 md:py-16 bg-secondary">
         <div className="container-x grid lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Dear Valued Partner</p>
@@ -51,7 +51,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid md:grid-cols-2 gap-6">
           {[
             { i: Target, t: "Our Commitment", d: "To provide quality extrusion machine spares and project support according to each customer's requirement." },
@@ -66,11 +66,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-secondary">
+      <section className="py-12 md:py-16 bg-secondary">
         <div className="container-x">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Core Competence</p>
           <h2 className="mt-3 text-2xl font-bold text-brand sm:text-3xl md:text-4xl">What the documents define for the company</h2>
-          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {productHighlights.map((item) => (
               <div key={item} className="rounded-xl bg-card border border-border p-6">
                 <CheckCircle2 className="h-8 w-8 text-safety" />
@@ -81,7 +81,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid md:grid-cols-3 gap-6">
           {[
             { i: Wrench, t: "Spares", d: "Extrusion and post-extrusion machine spares supplied as per requirement." },

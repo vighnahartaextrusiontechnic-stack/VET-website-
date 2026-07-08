@@ -15,7 +15,7 @@ export default function CaseStudiesPage() {
     <SiteLayout>
       <PageHero eyebrow="Project Support" title="Extrusion support areas we handle." subtitle="Machine setup, die heads, spares and process support based on the document's product scope." />
       <Breadcrumb items={[{ to: "/", label: "Home" }, { label: "Project Support" }]} />
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid md:grid-cols-2 gap-6">
           {STUDIES.map((s) => (
             <article key={s.t} className="bg-card border border-border rounded-xl p-7 hover:shadow-xl transition">
@@ -35,4 +35,3 @@ export default function CaseStudiesPage() {
     </SiteLayout>
   );
 }
-

@@ -17,7 +17,7 @@ export default function CareersPage() {
     <SiteLayout>
       <PageHero eyebrow="Careers" title="Build with an extrusion-focused team." subtitle="Join a practical engineering and service culture built around customer requirements, spares and machine support." />
       <Breadcrumb items={[{ to: "/", label: "Home" }, { label: "Careers" }]} />
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid lg:grid-cols-[1.4fr_1fr] gap-10">
           <div>
             <h2 className="text-2xl font-bold text-brand">Open positions</h2>

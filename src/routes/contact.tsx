@@ -18,7 +18,7 @@ export default function ContactPage() {
         />
       </section>
 
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid lg:grid-cols-[1.3fr_1fr] gap-10">
           <div className="bg-card border border-border rounded-xl p-5 shadow-sm sm:p-7">
             <h2 className="text-2xl font-bold text-brand">Send us an inquiry</h2>

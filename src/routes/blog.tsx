@@ -15,7 +15,7 @@ export default function BlogPage() {
     <SiteLayout>
       <PageHero eyebrow="Insights" title="Knowledge from the extrusion line." subtitle="Short notes on machine selection, spares, die heads and process stability." />
       <Breadcrumb items={[{ to: "/", label: "Home" }, { label: "Insights" }]} />
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container-x grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {POSTS.map((p) => (
             <article key={p.t} className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-xl transition group">
@@ -36,4 +36,3 @@ export default function BlogPage() {
     </SiteLayout>
   );
 }
-

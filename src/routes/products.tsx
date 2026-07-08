@@ -150,15 +150,15 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container-x space-y-14">
+      <section className="py-12 md:py-16">
+        <div className="container-x space-y-8 md:space-y-10">
           {productCategories.map((category, index) => (
             <ProductCategory key={category.id} category={category} muted={index % 2 === 1} />
           ))}
         </div>
       </section>
 
-      <section className="py-20 bg-brand text-brand-foreground">
+      <section className="py-12 md:py-16 bg-brand text-brand-foreground">
         <div className="container-x grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Our Motto</p>

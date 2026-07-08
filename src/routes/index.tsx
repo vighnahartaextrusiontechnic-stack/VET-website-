@@ -1,7 +1,7 @@
 ﻿import { AppLink as Link } from "@/components/app-link";
 import type { ComponentProps, ReactNode } from "react";
 import { SiteLayout } from "@/components/site-layout";
-import heroImg from "@/assets/banner (1).png";
+import heroImg from "@/assets/banner.png";
 import aboutImg from "@/assets/about.jpg";
 import { aboutCopy, aboutValues, dieHeadModels, machineModels, motto, productHighlights, productLineup2026, screwBarrelSet, supportPromise } from "@/content/extrusion";
 import { ArrowRight, CheckCircle2, Cog, Factory, Gauge, Headphones, Settings, Wrench, Zap } from "lucide-react";
@@ -74,8 +74,8 @@ function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: string
 
 function About() {
   return (
-    <section className="py-20 md:py-28">
-      <div className="container-x grid lg:grid-cols-2 gap-12 items-center">
+    <section className="py-12 md:py-16">
+      <div className="container-x grid gap-8 lg:grid-cols-2 lg:gap-10 items-center">
         <div className="relative">
           <img src={aboutImg} alt="Industrial extrusion workshop" loading="lazy" width={1200} height={800} className="w-full rounded-xl shadow-2xl" />
           <div className="absolute -bottom-6 -right-6 hidden md:block bg-safety text-safety-foreground rounded-xl p-5 shadow-xl max-w-[220px]">
@@ -84,8 +84,9 @@ function About() {
           </div>
         </div>
         <div>
-          <SectionHeader eyebrow="About Vighnaharta" title="Committed to quality extrusion support." sub={aboutCopy} />
-          <p className="mt-4 text-muted-foreground leading-relaxed">{aboutValues}</p>
+          <SectionHeader eyebrow="About Vighnaharta" title="Committed to quality extrusion support." />
+          <p className="mt-4 text-justify text-muted-foreground leading-relaxed">{aboutCopy}</p>
+          <p className="mt-4 text-justify text-muted-foreground leading-relaxed">{aboutValues}</p>
           <ul className="mt-6 space-y-3">
             {productHighlights.slice(0, 4).map((t) => (
               <li key={t} className="flex gap-3"><CheckCircle2 className="h-5 w-5 text-safety shrink-0" />{t}</li>
@@ -111,10 +112,10 @@ const SERVICES = [
 
 function Services() {
   return (
-    <section className="py-20 md:py-28 bg-secondary">
+    <section className="py-12 md:py-16 bg-secondary">
       <div className="container-x">
         <SectionHeader eyebrow="What We Do" title="Extrusion machinery support from setup to service." sub="We support pipe manufacturers with machines, die heads, spare parts and process guidance." />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {SERVICES.map((s) => (
             <div key={s.title} className="group bg-card border border-border rounded-xl p-6 hover:border-safety hover:shadow-xl hover:-translate-y-1 transition-all">
               <div className="grid h-12 w-12 place-items-center rounded-lg bg-brand text-brand-foreground group-hover:bg-safety group-hover:text-safety-foreground transition">
@@ -132,13 +133,13 @@ function Services() {
 
 function Products() {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-12 md:py-16">
       <div className="container-x">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader eyebrow="Product Detail" title="3-layer pipe machinery and die heads." sub="The document details extrusion machine models, screw types, outputs, pipe types and die-head ranges." />
           <Link to="/products" className="inline-flex items-center gap-2 font-semibold text-brand hover:text-safety">View product page <ArrowRight className="h-4 w-4" /></Link>
         </div>
-        <div className="mt-12 grid md:grid-cols-3 gap-5">
+        <div className="mt-8 grid md:grid-cols-3 gap-5">
           {[
             { title: "3-Layer Pipe Automatic Machine", desc: "Complete machine setup with material guidance for pipe manufacturing.", icon: Factory },
             { title: "Conical and Parallel Screw Models", desc: "VCTS and VPTS machine models covering CPVC, conduit and PVC pipe needs.", icon: Cog },
@@ -159,10 +160,10 @@ function Products() {
 
 function NewProductLineup() {
   return (
-    <section className="py-20 md:py-28 bg-secondary">
+    <section className="py-12 md:py-16 bg-secondary">
       <div className="container-x">
         <SectionHeader eyebrow="2026 Product Lineup" title="High-quality products focused on lower maintenance cost." sub="The latest document adds new endurance, automation, spare-part and raw-material improvements for pipe manufacturers." />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {productLineup2026.map((item) => (
             <div key={item.title} className="bg-card border border-border rounded-xl p-6 transition hover:border-safety hover:shadow-xl">
               <CheckCircle2 className="h-7 w-7 text-safety" />
@@ -171,7 +172,7 @@ function NewProductLineup() {
             </div>
           ))}
         </div>
-        <div className="mt-10 grid lg:grid-cols-[1fr_1.2fr] gap-6">
+        <div className="mt-8 grid lg:grid-cols-[1fr_1.2fr] gap-6">
           <div className="rounded-xl bg-brand p-7 text-brand-foreground">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Our Motto</p>
             <blockquote className="mt-4 text-xl font-bold leading-snug sm:text-2xl">"{motto}"</blockquote>
@@ -195,8 +196,8 @@ function NewProductLineup() {
 }
 function ModelTables() {
   return (
-    <section className="py-20 md:py-28 bg-secondary">
-      <div className="container-x space-y-12">
+    <section className="py-12 md:py-16 bg-secondary">
+      <div className="container-x space-y-8">
         <SectionHeader eyebrow="Machine Model Detail" title="Documented extrusion model ranges." />
         <div className="grid lg:grid-cols-2 gap-6">
           <TableCard title="Extrusion Machine Models">
@@ -234,10 +235,10 @@ function WhyUs() {
     { icon: Factory, t: "Complete Line View", d: "Support covers extrusion and post-extrusion areas, from extruder to tank sections." },
   ];
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-12 md:py-16">
       <div className="container-x">
         <SectionHeader eyebrow="Why Vighnaharta" title="A reliable partner in extrusion." />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {items.map((i) => (
             <div key={i.t} className="border-t-4 border-safety bg-card rounded-b-xl p-6 shadow-sm hover:shadow-xl transition">
               <i.icon className="h-8 w-8 text-brand" />
@@ -257,7 +258,7 @@ function AwardIcon(props: ComponentProps<typeof CheckCircle2>) {
 
 function ContactCTA() {
   return (
-    <section className="relative py-20 md:py-24 bg-brand text-brand-foreground overflow-hidden">
+    <section className="relative py-12 md:py-16 bg-brand text-brand-foreground overflow-hidden">
       <div className="container-x relative grid lg:grid-cols-[2fr_1fr] gap-10 items-center">
         <div>
           <h2 className="text-2xl font-bold leading-tight sm:text-3xl md:text-5xl">Need extrusion machine spares or die-head support?</h2>

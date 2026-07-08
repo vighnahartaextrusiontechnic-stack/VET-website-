@@ -1,8 +1,10 @@
 import { SiteLayout } from "@/components/site-layout";
 import contactBreadcrumbImg from "@/assets/breadcrumb/contact.png";
-import { AlertTriangle, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { AlertTriangle, Clock, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import { company } from "@/content/extrusion";
+
+const contactPhones = [company.phone, company.secondaryPhone];
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -59,15 +61,27 @@ export default function ContactPage() {
               <h3 className="font-bold text-brand">Office</h3>
               <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
                 <li className="flex gap-3"><MapPin className="h-4 w-4 text-safety mt-0.5 shrink-0" />{company.address}</li>
-                <li className="flex gap-3"><Phone className="h-4 w-4 text-safety mt-0.5 shrink-0" /><a href={`tel:${company.phone.replace(/\s/g, "")}`} className="hover:text-brand">{company.phone}</a></li>
+                <li className="flex gap-3">
+                  <Phone className="h-4 w-4 text-safety mt-0.5 shrink-0" />
+                  <span className="space-y-1">
+                    {contactPhones.map((phone) => (
+                      <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="block hover:text-brand">{phone}</a>
+                    ))}
+                  </span>
+                </li>
                 <li className="flex gap-3"><Mail className="h-4 w-4 text-safety mt-0.5 shrink-0" /><a href={`mailto:${company.email}`} className="hover:text-brand">{company.email}</a></li>
+                <li className="flex gap-3"><Linkedin className="h-4 w-4 text-safety mt-0.5 shrink-0" /><a href={company.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-brand">LinkedIn profile</a></li>
                 <li className="flex gap-3"><Clock className="h-4 w-4 text-safety mt-0.5 shrink-0" />Mon-Sat, 9:30 AM - 6:30 PM</li>
               </ul>
             </div>
             <div className="rounded-xl border border-safety/40 bg-safety/10 p-5 sm:p-6">
               <div className="flex items-center gap-2 text-brand font-bold"><AlertTriangle className="h-5 w-5 text-safety" /> Process Support</div>
               <p className="mt-2 text-sm text-muted-foreground">Any problem in your extrusion process? Talk to us and our expert team will suggest the best solution for you.</p>
-              <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="mt-3 inline-block font-display text-xl font-bold text-brand sm:text-2xl">{company.phone}</a>
+              <div className="mt-3 flex flex-col gap-1">
+                {contactPhones.map((phone) => (
+                  <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="font-display text-xl font-bold text-brand sm:text-2xl">{phone}</a>
+                ))}
+              </div>
             </div>
             <div className="bg-card border border-border rounded-xl p-6">
               <h3 className="font-bold text-brand">Useful details to share</h3>

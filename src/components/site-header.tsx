@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Cog, Menu, Phone, X } from "lucide-react";
 import { company } from "@/content/extrusion";
 
+const contactPhones = [company.phone, company.secondaryPhone];
+
 const nav = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
@@ -34,9 +36,13 @@ export function SiteHeader() {
       <div className="bg-brand text-brand-foreground text-xs">
         <div className="container-x flex min-h-9 flex-wrap items-center justify-center gap-x-4 gap-y-1 py-1 text-center sm:justify-between">
           <span className="hidden max-w-[60ch] sm:inline opacity-80">Extrusion machine spares, die heads and complete pipe line project support</span>
-          <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 font-medium hover:text-safety">
-            <Phone className="h-3.5 w-3.5" /> {company.phone}
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-end">
+            {contactPhones.map((phone) => (
+              <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="flex items-center gap-2 font-medium hover:text-safety">
+                <Phone className="h-3.5 w-3.5" /> {phone}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
       <div className="container-x flex min-h-16 items-center justify-between gap-3 py-2 sm:gap-4">

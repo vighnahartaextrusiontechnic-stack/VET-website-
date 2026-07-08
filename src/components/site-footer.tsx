@@ -1,6 +1,8 @@
 ﻿import { AppLink as Link } from "@/components/app-link";
-import { Cog, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Cog, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { company } from "@/content/extrusion";
+
+const contactPhones = [company.phone, company.secondaryPhone];
 
 export function SiteFooter() {
   return (
@@ -20,11 +22,15 @@ export function SiteFooter() {
             {company.tagline} We provide extrusion machine spares, die heads and project support as per customer requirements.
           </p>
           <div className="mt-5 flex gap-3">
-            {[Instagram, Facebook].map((Icon, i) => (
-              <a key={i} href="#" className="grid h-9 w-9 place-items-center rounded-md bg-white/10 hover:bg-safety hover:text-safety-foreground transition" aria-label="Social link">
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
+            <a
+              href={company.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grid h-9 w-9 place-items-center rounded-md bg-white/10 transition hover:bg-safety hover:text-safety-foreground"
+              aria-label="LinkedIn profile"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
           </div>
         </div>
         <div>
@@ -51,7 +57,14 @@ export function SiteFooter() {
           <h4 className="text-sm font-semibold uppercase tracking-wider text-safety">Get In Touch</h4>
           <ul className="mt-4 space-y-3 text-sm opacity-90">
             <li className="flex gap-3"><MapPin className="h-4 w-4 shrink-0 mt-0.5 text-safety" /><span>{company.address}</span></li>
-            <li className="flex gap-3"><Phone className="h-4 w-4 shrink-0 mt-0.5 text-safety" /><a href={`tel:${company.phone.replace(/\s/g, "")}`} className="hover:text-safety">{company.phone}</a></li>
+            <li className="flex gap-3">
+              <Phone className="h-4 w-4 shrink-0 mt-0.5 text-safety" />
+              <span className="space-y-1">
+                {contactPhones.map((phone) => (
+                  <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="block hover:text-safety">{phone}</a>
+                ))}
+              </span>
+            </li>
             <li className="flex gap-3"><Mail className="h-4 w-4 shrink-0 mt-0.5 text-safety" /><a href={`mailto:${company.email}`} className="hover:text-safety">{company.email}</a></li>
           </ul>
         </div>

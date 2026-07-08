@@ -14,6 +14,21 @@ const docImageModules = import.meta.glob("../assets/doc2026/*.{jpeg,png}", {
 
 const docImage = (name: string) => docImageModules[`../assets/doc2026/${name}`];
 
+const rawMaterialDetails = [
+  "PE wax",
+  "FT wax",
+  "OPE wax (Honeywell and Chinese)",
+  "Impact modifiers",
+  "Processing aid",
+  "Carbon black",
+  "TiO2 (Chemours and Chinese)",
+  "Calcium carbonate (Indian, Vietnam and Egypt)",
+  "One pack (lead and lead free)",
+  "HDPE, PP, LLDPE virgin granules and PVC resin",
+  "Stearic acid and optical brightener",
+  "Solvents like methanol, ethanol, toluene and butanol",
+];
+
 const productCategories = [
   {
     id: "pipe-machine-setup",
@@ -111,6 +126,7 @@ const productCategories = [
       "Can be discussed along with machinery or troubleshooting requirements.",
     ],
     images: ["image35.jpeg"].map(docImage).filter(Boolean),
+    imageFit: "contain",
   },
   {
     id: "raw-materials",
@@ -124,6 +140,7 @@ const productCategories = [
       "Designed to help end-products pass testing parameters in high-PHR processes.",
     ],
     images: [],
+    textDetails: rawMaterialDetails,
   },
 ];
 
@@ -194,7 +211,7 @@ function ProductCategory({ category, muted }: { category: ProductCategoryData; m
             ))}
           </ul>
         </div>
-        <CategoryImages title={category.title} images={category.images} />
+        <CategoryImages title={category.title} images={category.images} imageFit={category.imageFit} textDetails={category.textDetails} />
       </div>
       {category.table === "machines" && (
         <div className="border-t border-border p-6 md:p-8">
@@ -216,13 +233,34 @@ function ProductCategory({ category, muted }: { category: ProductCategoryData; m
   );
 }
 
-function CategoryImages({ title, images }: { title: string; images: string[] }) {
+function CategoryImages({
+  title,
+  images,
+  imageFit,
+  textDetails,
+}: {
+  title: string;
+  images: string[];
+  imageFit?: "cover" | "contain";
+  textDetails?: string[];
+}) {
   if (!images.length) {
     return (
       <div className="flex min-h-[220px] items-center bg-brand p-6 text-brand-foreground sm:min-h-[260px] sm:p-8">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Details Only</p>
-          <p className="mt-4 max-w-sm text-lg font-semibold">This uploaded document category is text-based, so its full details are listed here without a separate image group.</p>
+          {textDetails?.length ? (
+            <ul className="mt-4 grid max-w-xl gap-2 text-sm font-semibold leading-relaxed sm:grid-cols-2">
+              {textDetails.map((detail) => (
+                <li key={detail} className="flex gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-safety" />
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 max-w-sm text-lg font-semibold">This uploaded document category is text-based, so its full details are listed here without a separate image group.</p>
+          )}
         </div>
       </div>
     );
@@ -230,10 +268,15 @@ function CategoryImages({ title, images }: { title: string; images: string[] }) 
 
   return (
     <div className="bg-background p-4 md:p-5">
-      <div className={`grid gap-3 ${images.length === 1 ? "grid-cols-1" : "grid-cols-1 min-[520px]:grid-cols-2"}`}>
+      <div className={`grid gap-3 ${images.length === 1 ? "grid-cols-1 justify-items-center" : "grid-cols-1 min-[520px]:grid-cols-2"}`}>
         {images.map((src, index) => (
-          <div key={src} className="aspect-[4/3] overflow-hidden rounded-lg border border-border bg-card">
-            <img src={src} alt={`${title} document visual ${index + 1}`} loading="lazy" className="h-full w-full object-cover" />
+          <div key={src} className={`${imageFit === "contain" ? "aspect-[3/4] max-h-[34rem] w-full max-w-[26rem]" : "aspect-[4/3] w-full"} overflow-hidden rounded-lg border border-border bg-card`}>
+            <img
+              src={src}
+              alt={`${title} document visual ${index + 1}`}
+              loading="lazy"
+              className={`h-full w-full ${imageFit === "contain" ? "object-contain" : "object-cover"}`}
+            />
           </div>
         ))}
       </div>

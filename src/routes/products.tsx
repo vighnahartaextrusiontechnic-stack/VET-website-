@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import { SiteLayout } from "@/components/site-layout";
 import productBreadcrumbImg from "@/assets/breadcrumb/product.png";
 import machineImg from "@/assets/extrusion-machine.jpeg";
-import { dieHeadModels, machineModels, motto, productHighlights, screwBarrelSet, supportPromise } from "@/content/extrusion";
-import { ArrowRight, CheckCircle2, Download } from "lucide-react";
+import { dieHeadModels, machineModels, productHighlights, screwBarrelSet } from "@/content/extrusion";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const docImageModules = import.meta.glob("../assets/doc2026/*.{jpeg,png}", {
   eager: true,
@@ -177,16 +177,15 @@ export default function ProductsPage() {
 
       <section className="py-12 md:py-16 bg-brand text-brand-foreground">
         <div className="container-x grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Our Motto</p>
-            <blockquote className="mt-4 text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">"{motto}"</blockquote>
-            <p className="mt-4 max-w-2xl opacity-85">{supportPromise}</p>
+          <div className="relative max-w-3xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.32em] text-safety">Our Motto</p>
+            <blockquote className="relative mt-5 font-display text-3xl font-black leading-[1.12] text-white sm:text-4xl md:text-5xl">
+              <span className="relative">Long-term solutions. Real problem solving.</span>
+            </blockquote>
+            <p className="mt-5 max-w-xl text-base font-medium leading-relaxed text-white/82 sm:text-lg">Ask us about plant issues, modifications or process improvements.</p>
           </div>
           <div className="flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap lg:justify-end">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-safety px-5 py-3.5 font-semibold text-safety-foreground transition hover:brightness-110 sm:px-6">Request quote <ArrowRight className="h-4 w-4" /></Link>
-            <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/25 px-5 py-3.5 font-semibold transition hover:bg-white/10 sm:px-6">
-              <Download className="h-4 w-4" /> Brochure details
-            </button>
           </div>
         </div>
       </section>

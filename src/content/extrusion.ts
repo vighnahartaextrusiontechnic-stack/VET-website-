@@ -4,7 +4,7 @@
   tagline: "Reliable extrusion machinery, spares and process support.",
   phone: "+91 92095 60610",
   secondaryPhone: "+91 92095 56215",
-  email: "hello@vighnahartaenterprise.com",
+  email: "vighnahartaextrusiontechnic@gmail.com",
   linkedin: "https://www.linkedin.com/in/pankaj-kolhe-214079340",
   address: "Pune, Maharashtra, India",
 };

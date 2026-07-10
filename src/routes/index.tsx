@@ -291,8 +291,8 @@ function TableCard({ title, children }: { title: string; children: ReactNode }) 
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
       <h3 className="px-5 py-4 font-bold text-brand border-b border-border">{title}</h3>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm [&_th]:bg-secondary [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold [&_td]:px-4 [&_td]:py-3 [&_td]:border-t [&_td]:border-border">
+      <div className="overflow-hidden">
+        <table className="min-w-0 w-full table-fixed text-xs sm:text-sm [&_th]:bg-secondary [&_th]:px-3 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold sm:[&_th]:px-4 [&_td]:px-3 [&_td]:py-3 sm:[&_td]:px-4 [&_td]:border-t [&_td]:border-border">
           {children}
         </table>
       </div>

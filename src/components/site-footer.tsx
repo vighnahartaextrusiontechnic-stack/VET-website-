@@ -7,7 +7,7 @@ const contactPhones = [company.phone, company.secondaryPhone];
 export function SiteFooter() {
   return (
     <footer className="bg-brand-deep text-brand-foreground">
-      <div className="container-x grid gap-8 py-12 sm:py-14 md:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:py-16">
+      <div className="container-x grid gap-8 py-12 sm:py-14 md:grid-cols-2 md:gap-10 lg:grid-cols-[1.15fr_0.8fr_1.25fr_1.55fr] lg:py-16">
         <div>
           <div className="flex items-center gap-2">
             <div className="grid h-10 w-10 place-items-center rounded-md bg-safety text-safety-foreground">
@@ -45,7 +45,7 @@ export function SiteFooter() {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-safety">Quick Links</h4>
           <ul className="mt-4 space-y-2 text-sm opacity-90">
-            {[["/about","About Us"],["/products","Products"],["/services","Services"],["/industries","Applications"],["/contact","Contact"]].map(([to,l]) => (
+            {[["/about","About Us"],["/products","Products"],["/services","Services"],["/industries","Industries"],["/contact","Contact"]].map(([to,l]) => (
               <li key={to}><Link to={to} className="hover:text-safety transition">{l}</Link></li>
             ))}
           </ul>
@@ -74,7 +74,7 @@ export function SiteFooter() {
                 ))}
               </span>
             </li>
-            <li className="flex gap-3"><Mail className="h-4 w-4 shrink-0 mt-0.5 text-safety" /><a href={`mailto:${company.email}`} className="hover:text-safety">{company.email}</a></li>
+            <li className="flex gap-3"><Mail className="h-4 w-4 shrink-0 mt-0.5 text-safety" /><a href={`mailto:${company.email}`} className="whitespace-nowrap break-normal text-[13px] hover:text-safety sm:text-sm">{company.email}</a></li>
           </ul>
         </div>
       </div>

@@ -1,5 +1,11 @@
 ﻿import { AppLink as Link } from "@/components/app-link";
-import type { ReactNode } from "react";
+import {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import { useEffect, useState, type ReactNode } from "react";
 import { SiteLayout } from "@/components/site-layout";
 import productBreadcrumbImg from "@/assets/breadcrumb/product.png";
 import machineImg from "@/assets/extrusion-machine.jpeg";
@@ -38,6 +44,7 @@ const productCategories = [
       "Full project support for a 3-layer pipe automatic machine setup with material guidance, extrusion machine selection and practical process support.",
     details: productHighlights,
     images: [machineImg],
+    imageFit: "wide-contain",
   },
   {
     id: "die-heads",
@@ -240,9 +247,24 @@ function CategoryImages({
 }: {
   title: string;
   images: string[];
-  imageFit?: "cover" | "contain";
+  imageFit?: "cover" | "contain" | "wide-contain";
   textDetails?: string[];
 }) {
+  const imageGroups = chunkImages(images, 4);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!carouselApi || imageGroups.length <= 1) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      carouselApi.scrollNext();
+    }, 3500);
+
+    return () => window.clearInterval(intervalId);
+  }, [carouselApi, imageGroups.length]);
+
   if (!images.length) {
     return (
       <div className="flex min-h-[220px] items-center bg-brand p-6 text-brand-foreground sm:min-h-[260px] sm:p-8">
@@ -266,29 +288,51 @@ function CategoryImages({
   }
 
   return (
-    <div className="bg-background p-4 md:p-5">
-      <div className={`grid gap-3 ${images.length === 1 ? "grid-cols-1 justify-items-center" : "grid-cols-1 min-[520px]:grid-cols-2"}`}>
-        {images.map((src, index) => (
-          <div key={src} className={`${imageFit === "contain" ? "aspect-[3/4] max-h-[34rem] w-full max-w-[26rem]" : "aspect-[4/3] w-full"} overflow-hidden rounded-lg border border-border bg-card`}>
-            <img
-              src={src}
-              alt={`${title} document visual ${index + 1}`}
-              loading="lazy"
-              className={`h-full w-full ${imageFit === "contain" ? "object-contain" : "object-cover"}`}
-            />
-          </div>
+    <div className="flex h-full items-center bg-background p-4 md:p-5">
+      <Carousel
+        opts={{ align: "start", loop: imageGroups.length > 1 }}
+        setApi={setCarouselApi}
+        className="mx-auto w-full max-w-2xl"
+      >
+        <CarouselContent className="-ml-3">
+        {imageGroups.map((group, groupIndex) => (
+          <CarouselItem key={group.join("-")} className="pl-3">
+            <div className={`grid gap-3 ${group.length === 1 ? "grid-cols-1 justify-items-center" : "grid-cols-1 min-[520px]:grid-cols-2"}`}>
+              {group.map((src, index) => (
+                <div key={src} className={`${imageFit === "contain" ? "aspect-[3/4] max-h-[34rem] w-full max-w-[26rem]" : imageFit === "wide-contain" ? "aspect-[16/9] w-full" : "aspect-[4/3] w-full"} overflow-hidden rounded-lg border border-border bg-white`}>
+                  <img
+                    src={src}
+                    alt={`${title} document visual ${groupIndex * 4 + index + 1}`}
+                    loading="lazy"
+                    className={`h-full w-full object-center ${imageFit === "contain" || imageFit === "wide-contain" ? "object-contain" : "object-cover"} ${imageFit === "wide-contain" ? "scale-115" : ""}`}
+                  />
+                </div>
+              ))}
+            </div>
+          </CarouselItem>
         ))}
-      </div>
+        </CarouselContent>
+      </Carousel>
     </div>
   );
+}
+
+function chunkImages(images: string[], size: number) {
+  const chunks: string[][] = [];
+
+  for (let index = 0; index < images.length; index += size) {
+    chunks.push(images.slice(index, index + size));
+  }
+
+  return chunks;
 }
 
 function TableCard({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
       <h3 className="px-5 py-4 font-bold text-brand border-b border-border">{title}</h3>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm [&_th]:bg-secondary [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold [&_td]:px-4 [&_td]:py-3 [&_td]:border-t [&_td]:border-border">
+      <div className="overflow-hidden">
+        <table className="min-w-0 w-full table-fixed text-xs sm:text-sm [&_th]:bg-secondary [&_th]:px-3 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold sm:[&_th]:px-4 [&_td]:px-3 [&_td]:py-3 sm:[&_td]:px-4 [&_td]:border-t [&_td]:border-border">
           {children}
         </table>
       </div>

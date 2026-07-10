@@ -3,8 +3,8 @@ import type { ComponentProps, ReactNode } from "react";
 import { SiteLayout } from "@/components/site-layout";
 import heroImg from "@/assets/banner.png";
 import aboutImg from "@/assets/about.jpg";
-import { aboutCopy, aboutValues, dieHeadModels, machineModels, motto, productHighlights, productLineup2026, screwBarrelSet, supportPromise } from "@/content/extrusion";
-import { ArrowRight, CheckCircle2, Cog, Factory, Gauge, Headphones, Settings, Wrench, Zap } from "lucide-react";
+import { aboutCopy, aboutValues, clients, dieHeadModels, machineModels, motto, productHighlights, productLineup2026, screwBarrelSet, supportPromise } from "@/content/extrusion";
+import { ArrowRight, CheckCircle2, Cog, Factory, Gauge, Headphones, Settings, ShieldCheck, Wrench, Zap } from "lucide-react";
 
 export default function Index() {
   return (
@@ -16,8 +16,8 @@ export default function Index() {
       <Products />
             <NewProductLineup />
       <ModelTables />
+      <Clients />
       <WhyUs />
-      <ContactCTA />
     </SiteLayout>
   );
 }
@@ -28,7 +28,7 @@ function Hero() {
       <img
         src={heroImg}
         alt="Vighnaharta Enterprise product banner"
-        className="block aspect-[2/1] w-full object-cover"
+        className="block aspect-[2/1] w-full object-contain"
         width={1200}
         height={600}
       />
@@ -212,6 +212,79 @@ function ModelTables() {
       </div>
     </section>
   );
+}
+
+function Clients() {
+  return (
+    <section className="overflow-hidden bg-brand-deep py-12 text-brand-foreground md:py-16">
+      <div className="container-x">
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">
+              Our Clients
+            </p>
+            <h2 className="mt-4 text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">
+              Trusted by leading manufacturers.
+            </h2>
+          </div>
+          <div className="grid grid-cols-3 overflow-hidden rounded-xl border border-white/10 bg-white/10">
+            {[
+              { value: `${clients.length}+`, label: "Client references" },
+              { value: "India", label: "Multi-location support" },
+              { value: "UAE", label: "International reach" },
+            ].map((stat) => (
+              <div key={stat.label} className="min-h-28 border-r border-white/10 px-3 py-5 text-center last:border-r-0 sm:px-5">
+                <div className="font-display text-2xl font-bold text-safety sm:text-3xl">{stat.value}</div>
+                <div className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/65 sm:text-xs">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/10 sm:p-5">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h3 className="text-lg font-bold text-white">Trusted customer network</h3>
+            <div className="rounded-md bg-safety px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-safety-foreground">
+              {clients.length}+ clients
+            </div>
+          </div>
+
+          <div className="client-carousel mt-5" aria-label="Client names carousel">
+            <div className="client-carousel-track">
+              {[0, 1].map((setIndex) => (
+                <div key={setIndex} className="client-carousel-group" aria-hidden={setIndex === 1}>
+                  {clients.map((client, index) => (
+                    <div key={`${client}-${setIndex}-${index}`} className="client-carousel-card">
+                      <div className="client-carousel-mark">{clientInitials(client)}</div>
+                      <div className="min-w-0">
+                        <div className="client-carousel-name">{client}</div>
+                        <div className="client-carousel-meta">
+                          <ShieldCheck className="h-3.5 w-3.5" /> Client partner
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function clientInitials(name: string) {
+  const words = name
+    .replace(/[^a-zA-Z0-9 &]/g, " ")
+    .split(/\s+/)
+    .filter((word) => word.length > 1 && !["and", "pvt", "ltd", "limited", "pipe", "pipes"].includes(word.toLowerCase()));
+
+  return words
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
 }
 
 function TableCard({ title, children }: { title: string; children: ReactNode }) {

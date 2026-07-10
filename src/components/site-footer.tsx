@@ -1,5 +1,5 @@
 ﻿import { AppLink as Link } from "@/components/app-link";
-import { Cog, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Cog, Facebook, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { company } from "@/content/extrusion";
 
 const contactPhones = [company.phone, company.secondaryPhone];
@@ -22,6 +22,15 @@ export function SiteFooter() {
             {company.tagline} We provide extrusion machine spares, die heads and project support as per customer requirements.
           </p>
           <div className="mt-5 flex gap-3">
+            <a
+              href="https://www.facebook.com/share/1HjayX9igV/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grid h-9 w-9 place-items-center rounded-md bg-white/10 transition hover:bg-safety hover:text-safety-foreground"
+              aria-label="Facebook profile"
+            >
+              <Facebook className="h-4 w-4" />
+            </a>
             <a
               href={company.linkedin}
               target="_blank"

@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import quoteImg from "@/assets/about.jpg";
+import quoteImg from "@/assets/popup-img.jpg";
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight, Cog, Mail, Menu, Phone, Send, X } from "lucide-react";
 import { company } from "@/content/extrusion";
@@ -150,12 +150,12 @@ function QuoteDialogContent() {
 
   return (
     <DialogContent className="max-h-[92vh] overflow-y-auto border-0 bg-transparent p-0 shadow-2xl sm:max-w-3xl">
-      <div className="grid overflow-hidden rounded-lg bg-background shadow-2xl md:grid-cols-[0.95fr_1.05fr]">
-        <div className="grid overflow-hidden bg-brand text-brand-foreground">
+      <div className="grid overflow-hidden rounded-lg border border-brand bg-background shadow-2xl md:grid-cols-[0.95fr_1.05fr]">
+        <div className="grid overflow-hidden border-b border-brand bg-brand text-brand-foreground md:border-b-0 md:border-r">
           <img
             src={quoteImg}
             alt="Engineers reviewing extrusion project requirements"
-            className="h-48 w-full object-cover md:h-full md:min-h-56"
+            className="h-48 w-full border-b border-brand object-cover md:h-full md:min-h-56"
           />
           <div className="p-6 sm:p-7">
             <div className="grid h-12 w-12 place-items-center rounded-md bg-safety text-safety-foreground shadow-lg shadow-black/15">
@@ -181,7 +181,7 @@ function QuoteDialogContent() {
             </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="grid gap-4 p-6 sm:p-7">
+        <form onSubmit={handleSubmit} className="grid gap-4 bg-background p-6 sm:p-7">
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
             <label className="grid gap-1.5 text-sm font-semibold text-brand">
               Name

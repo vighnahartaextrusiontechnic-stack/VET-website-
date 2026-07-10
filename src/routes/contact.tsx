@@ -1,10 +1,13 @@
 import { SiteLayout } from "@/components/site-layout";
 import contactBreadcrumbImg from "@/assets/breadcrumb/contact.png";
 import { AlertTriangle, Clock, Linkedin, Mail, MapPin, Phone } from "lucide-react";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { company } from "@/content/extrusion";
 
 const contactPhones = [company.phone, company.secondaryPhone];
+const limitPhoneInput = (event: FormEvent<HTMLInputElement>) => {
+  event.currentTarget.value = event.currentTarget.value.replace(/\D/g, "").slice(0, 10);
+};
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -34,7 +37,7 @@ export default function ContactPage() {
                 <input required maxLength={100} placeholder="Full name *" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
                 <input required maxLength={150} placeholder="Company" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
                 <input required type="email" maxLength={255} placeholder="Email *" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
-                <input required maxLength={20} placeholder="Phone *" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
+                <input required type="tel" inputMode="numeric" pattern="[0-9]{10}" maxLength={10} onInput={limitPhoneInput} placeholder="Phone *" className="rounded-md border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-safety" />
                 <select className="sm:col-span-2 rounded-md border border-border bg-background px-4 py-2.5 text-sm">
                   <option>I am interested in (select)</option>
                   <option>3-layer pipe automatic machine setup</option>

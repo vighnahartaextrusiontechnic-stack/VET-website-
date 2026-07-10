@@ -1,7 +1,7 @@
 ﻿import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Breadcrumb } from "./about";
 import { Briefcase, MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { company } from "@/content/extrusion";
 
 const ROLES = [
@@ -10,6 +10,9 @@ const ROLES = [
   { t: "Spare Parts Coordinator", l: "Pune", type: "Full-time" },
   { t: "Project Sales Executive", l: "Maharashtra", type: "Full-time" },
 ];
+const limitPhoneInput = (event: FormEvent<HTMLInputElement>) => {
+  event.currentTarget.value = event.currentTarget.value.replace(/\D/g, "").slice(0, 10);
+};
 
 export default function CareersPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -45,7 +48,7 @@ export default function CareersPage() {
               <form className="mt-5 space-y-3" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
                 <input required maxLength={100} placeholder="Full name" className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-safety" />
                 <input required type="email" maxLength={255} placeholder="Email" className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-safety" />
-                <input required maxLength={20} placeholder="Phone" className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-safety" />
+                <input required type="tel" inputMode="numeric" pattern="[0-9]{10}" maxLength={10} onInput={limitPhoneInput} placeholder="Phone" className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-safety" />
                 <input required maxLength={150} placeholder="Position applying for" className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-safety" />
                 <textarea required maxLength={1000} rows={4} placeholder="Brief about your experience" className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-safety" />
                 <button className="w-full rounded-md bg-safety px-4 py-3 text-sm font-semibold text-safety-foreground hover:brightness-110">Submit application</button>

@@ -1,5 +1,6 @@
 ﻿import { AppLink as Link } from "@/components/app-link";
-import { Cog, Facebook, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import logo from "@/assets/logo.png";
+import { Facebook, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { company } from "@/content/extrusion";
 
 const contactPhones = [company.phone, company.secondaryPhone];
@@ -9,15 +10,15 @@ export function SiteFooter() {
     <footer className="bg-brand-deep text-brand-foreground">
       <div className="container-x grid gap-8 py-12 sm:py-14 md:grid-cols-2 md:gap-10 lg:grid-cols-[1.15fr_0.8fr_1.25fr_1.55fr] lg:py-16">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="grid h-10 w-10 place-items-center rounded-md bg-safety text-safety-foreground">
-              <Cog className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="font-display font-bold text-lg">{company.shortName}</div>
-              <div className="text-[10px] uppercase tracking-widest opacity-70">Enterprise</div>
-            </div>
-          </div>
+          <Link to="/" className="inline-flex rounded-md bg-white px-3 py-2">
+            <img
+              src={logo}
+              alt={`${company.name} logo`}
+              width={184}
+              height={72}
+              className="h-[72px] w-[184px] object-contain [image-rendering:-webkit-optimize-contrast]"
+            />
+          </Link>
           <p className="mt-4 text-sm opacity-80 leading-relaxed">
             {company.tagline} We provide extrusion machine spares, die heads and project support as per customer requirements.
           </p>

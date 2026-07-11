@@ -7,9 +7,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import logo from "@/assets/logo.png";
 import quoteImg from "@/assets/popup-img.jpg";
 import { useEffect, useState, type FormEvent } from "react";
-import { ArrowRight, Cog, Mail, Menu, Phone, Send, X } from "lucide-react";
+import { ArrowRight, Mail, Menu, Phone, Send, X } from "lucide-react";
 import { company } from "@/content/extrusion";
 
 const contactPhones = [company.phone, company.secondaryPhone];
@@ -59,14 +60,14 @@ export function SiteHeader() {
         </div>
       </div>
       <div className="container-x flex min-h-16 items-center justify-between gap-3 py-2 sm:gap-4">
-        <Link to="/" className="flex items-center gap-2 min-w-0">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-brand text-brand-foreground">
-            <Cog className="h-5 w-5" />
-          </div>
-          <div className="min-w-0 leading-tight">
-            <div className="max-w-[11rem] truncate font-display font-bold text-brand sm:max-w-none">{company.shortName}</div>
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Enterprise</div>
-          </div>
+        <Link to="/" className="-ml-2 flex items-center gap-2 min-w-0 sm:-ml-3">
+          <img
+            src={logo}
+            alt={`${company.name} logo`}
+            width={184}
+            height={72}
+            className="h-[72px] w-[184px] shrink-0 object-contain [image-rendering:-webkit-optimize-contrast]"
+          />
         </Link>
         <nav className="hidden lg:flex items-center gap-1">
           {nav.map((n) => (

@@ -2,21 +2,25 @@
 import { SiteLayout } from "@/components/site-layout";
 import aboutBreadcrumbImg from "@/assets/breadcrumb/about us.png";
 import machineImg from "@/assets/extrusion-machine.jpeg";
+import pankajImg from "@/assets/team/Pankaj Govind Kolhe.png";
+import priyaImg from "@/assets/team/Priya Pankaj Kolhe.png";
 import { aboutCopy, aboutValues, partnerMessage, productHighlights, supportPromise } from "@/content/extrusion";
 import { ArrowRight, CheckCircle2, Lightbulb, Target, Users, Wrench } from "lucide-react";
 
 const keyPeople = [
   {
-    name: "Priya Pankaj Kolhe",
-    qualification: "B.Com, MBA Finance",
-    experience: "15 years in purchase",
-    initials: "PK",
-  },
-  {
     name: "Pankaj Govind Kolhe",
     qualification: "Electrical Engineering",
     experience: "24 years of industrial experience, including 15 years in the pipe industry",
     initials: "PG",
+    image: pankajImg,
+  },
+  {
+    name: "Priya Pankaj Kolhe",
+    qualification: "B.Com, MBA Finance",
+    experience: "15 years in purchase",
+    initials: "PK",
+    image: priyaImg,
   },
 ];
 
@@ -70,11 +74,18 @@ export default function AboutPage() {
         <div className="container-x">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-safety">Key Persons</p>
           <h2 className="mt-3 text-2xl font-bold text-brand sm:text-3xl md:text-4xl">Experienced leadership behind Vighnaharta.</h2>
-          <div className="mx-auto mt-8 grid max-w-5xl gap-5 md:grid-cols-2">
+          <div className="mx-auto mt-8 grid max-w-4xl gap-5 md:grid-cols-2">
             {keyPeople.map((person) => (
-              <article key={person.name} className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-                <div className="grid aspect-[5/2] place-items-center bg-secondary text-brand">
-                  <span className="font-display text-2xl font-bold">{person.initials}</span>
+              <article key={person.name} className="mx-auto w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+                <div className="aspect-[6/5] w-full overflow-hidden">
+                  <img
+                    src={person.image}
+                    alt={person.name}
+                    loading="lazy"
+                    width={512}
+                    height={512}
+                    className="h-[calc(100%+1rem)] w-full -translate-y-2 object-cover object-top"
+                  />
                 </div>
                 <div className="p-4 sm:p-5">
                   <h3 className="text-lg font-bold text-brand">{person.name}</h3>

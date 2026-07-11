@@ -8,6 +8,8 @@ import Contact from "@/routes/contact";
 import Blog from "@/routes/blog";
 import CaseStudies from "@/routes/case-studies";
 import Careers from "@/routes/careers";
+import { applyRouteSeo } from "@/lib/seo";
+import { useEffect } from "react";
 
 const routes: Record<string, () => JSX.Element> = {
   "/": Home,
@@ -38,5 +40,10 @@ function NotFound() {
 export default function App() {
   const path = window.location.pathname.replace(/\/$/, "") || "/";
   const Page = routes[path] ?? NotFound;
+
+  useEffect(() => {
+    applyRouteSeo(path, Boolean(routes[path]));
+  }, [path]);
+
   return <Page />;
 }

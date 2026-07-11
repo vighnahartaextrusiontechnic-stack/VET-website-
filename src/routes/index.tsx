@@ -25,6 +25,9 @@ export default function Index() {
 function Hero() {
   return (
     <section className="bg-background">
+      <h1 className="sr-only">
+        Vighnaharta Enterprise extrusion machines, pipe machine spares, die heads and process support
+      </h1>
       <img
         src={heroImg}
         alt="Vighnaharta Enterprise product banner"

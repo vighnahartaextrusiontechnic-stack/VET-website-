@@ -1,0 +1,16 @@
+{
+  "name": "Vighnaharta Enterprise",
+  "short_name": "Vighnaharta",
+  "description": "Extrusion machinery, spares, die heads and process support for pipe manufacturers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#062b63",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}

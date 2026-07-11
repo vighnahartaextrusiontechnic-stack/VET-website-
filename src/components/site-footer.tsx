@@ -1,5 +1,5 @@
 ﻿import { AppLink as Link } from "@/components/app-link";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo (1).png";
 import { Facebook, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { company } from "@/content/extrusion";
 

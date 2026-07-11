@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo (1).png";
 import quoteImg from "@/assets/popup-img.jpg";
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight, Mail, Menu, Phone, Send, X } from "lucide-react";

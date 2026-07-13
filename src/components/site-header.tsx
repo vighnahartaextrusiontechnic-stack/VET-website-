@@ -14,6 +14,8 @@ import { ArrowRight, Mail, Menu, Phone, Send, X } from "lucide-react";
 import { company } from "@/content/extrusion";
 
 const contactPhones = [company.phone, company.secondaryPhone];
+const WEB3FORMS_ACCESS_KEY = "2cf966b8-f4d7-405b-b886-7925c5a71340";
+
 const limitPhoneInput = (event: FormEvent<HTMLInputElement>) => {
   event.currentTarget.value = event.currentTarget.value.replace(/\D/g, "").slice(0, 10);
 };
@@ -128,25 +130,36 @@ export function SiteHeader() {
 }
 
 function QuoteDialogContent() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setError("");
+    setIsSubmitting(true);
 
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get("name")?.toString() || "";
-    const phone = formData.get("phone")?.toString() || "";
-    const email = formData.get("email")?.toString() || "";
-    const product = formData.get("product")?.toString() || "";
-    const message = formData.get("message")?.toString() || "";
-    const body = [
-      `Name: ${name}`,
-      `Phone: ${phone}`,
-      `Email: ${email}`,
-      `Requirement: ${product}`,
-      "",
-      message,
-    ].join("\n");
+    const form = event.currentTarget;
+    const formData = new FormData(form);
 
-    window.location.href = `mailto:${company.email}?subject=${encodeURIComponent("Website quote request")}&body=${encodeURIComponent(body)}`;
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const result = (await response.json()) as { success?: boolean; message?: string };
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Unable to send request right now.");
+      }
+
+      form.reset();
+      setSent(true);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Unable to send request right now.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -182,40 +195,52 @@ function QuoteDialogContent() {
             </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="grid gap-4 bg-background p-6 sm:p-7">
-          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
-            <label className="grid gap-1.5 text-sm font-semibold text-brand">
-              Name
-              <input required name="name" maxLength={80} className="min-w-0 rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" />
-            </label>
-            <label className="grid gap-1.5 text-sm font-semibold text-brand">
-              Phone
-              <input required type="tel" name="phone" inputMode="numeric" pattern="[0-9]{10}" maxLength={10} onInput={limitPhoneInput} className="min-w-0 rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" />
-            </label>
+        {sent ? (
+          <div className="grid content-center gap-3 bg-background p-6 sm:p-7">
+            <h3 className="text-2xl font-bold text-brand">Thank you, request received.</h3>
+            <p className="text-sm text-muted-foreground">Our team will review your requirement and contact you soon.</p>
           </div>
-          <label className="grid gap-1.5 text-sm font-semibold text-brand">
-            Email
-            <input required type="email" name="email" maxLength={120} className="rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" />
-          </label>
-          <label className="grid gap-1.5 text-sm font-semibold text-brand">
-            Requirement
-            <select name="product" className="rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20">
-              <option>3-layer pipe machine setup</option>
-              <option>Die head</option>
-              <option>Extrusion machine spare</option>
-              <option>Screw barrel set</option>
-              <option>Panel modification</option>
-              <option>Other requirement</option>
-            </select>
-          </label>
-          <label className="grid gap-1.5 text-sm font-semibold text-brand">
-            Message
-            <textarea name="message" rows={4} maxLength={600} className="resize-none rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" placeholder="Tell us pipe size, machine type, spare details or project requirement." />
-          </label>
-          <button type="submit" className="inline-flex items-center justify-center gap-2 rounded-md bg-safety px-5 py-3 text-sm font-bold text-safety-foreground shadow-sm transition hover:brightness-110">
-            Send Request <ArrowRight className="h-4 w-4" />
-          </button>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="grid gap-4 bg-background p-6 sm:p-7">
+            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+            <input type="hidden" name="subject" value="New quote request from Vighnaharta Enterprise website" />
+            <input type="hidden" name="from_name" value="Vighnaharta Enterprise Website" />
+            <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+              <label className="grid gap-1.5 text-sm font-semibold text-brand">
+                Name
+                <input required name="name" maxLength={80} className="min-w-0 rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" />
+              </label>
+              <label className="grid gap-1.5 text-sm font-semibold text-brand">
+                Phone
+                <input required type="tel" name="phone" inputMode="numeric" pattern="[0-9]{10}" maxLength={10} onInput={limitPhoneInput} className="min-w-0 rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" />
+              </label>
+            </div>
+            <label className="grid gap-1.5 text-sm font-semibold text-brand">
+              Email
+              <input required type="email" name="email" maxLength={120} className="rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" />
+            </label>
+            <label className="grid gap-1.5 text-sm font-semibold text-brand">
+              Requirement
+              <select name="requirement" className="rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20">
+                <option>3-layer pipe machine setup</option>
+                <option>Die head</option>
+                <option>Extrusion machine spare</option>
+                <option>Screw barrel set</option>
+                <option>Panel modification</option>
+                <option>Other requirement</option>
+              </select>
+            </label>
+            <label className="grid gap-1.5 text-sm font-semibold text-brand">
+              Message
+              <textarea name="message" rows={4} maxLength={600} className="resize-none rounded-md border border-border bg-background px-3 py-2.5 text-sm font-normal text-foreground outline-none transition focus:border-safety focus:ring-2 focus:ring-safety/20" placeholder="Tell us pipe size, machine type, spare details or project requirement." />
+            </label>
+            {error ? <p className="rounded-md border border-destructive/30 bg-destructive/10 px-4 py-2 text-sm text-destructive">{error}</p> : null}
+            <button type="submit" disabled={isSubmitting} className="inline-flex items-center justify-center gap-2 rounded-md bg-safety px-5 py-3 text-sm font-bold text-safety-foreground shadow-sm transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
+              {isSubmitting ? "Sending..." : "Send Request"} <ArrowRight className="h-4 w-4" />
+            </button>
+          </form>
+        )}
       </div>
     </DialogContent>
   );

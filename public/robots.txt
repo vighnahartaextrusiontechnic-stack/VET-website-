@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vighnahartaenterprise.com/sitemap.xml
+Sitemap: https://www.vighnahartaextrusion.com/sitemap.xml

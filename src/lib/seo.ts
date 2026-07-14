@@ -3,56 +3,61 @@ import logoImage from "@/assets/logo (1).png";
 import { company } from "@/content/extrusion";
 
 const SITE_NAME = "Vighnaharta Enterprise";
-const DEFAULT_SITE_URL = "https://vighnahartaenterprise.com";
+const DEFAULT_SITE_URL = "https://www.vighnahartaextrusion.com";
 
 type SeoPage = {
   title: string;
   description: string;
   keywords: string;
+  schemaType?: "WebPage" | "AboutPage" | "CollectionPage" | "ContactPage";
 };
 
 export const seoPages: Record<string, SeoPage> = {
   "/": {
-    title: "Vighnaharta Enterprise | Extrusion Machines, Spares and Die Heads",
+    title: "Extrusion Machines, Die Heads and Pipe Machine Spares | Vighnaharta Enterprise",
     description:
-      "Vighnaharta Enterprise supplies extrusion machine spares, 3-layer pipe machine setup, die heads, screw barrel sets, calibration and process support for pipe manufacturers.",
+      "Vighnaharta Enterprise supplies 3-layer pipe extrusion machines, die heads, screw barrel sets, extrusion machine spares, calibration and process support for PVC and CPVC pipe manufacturers.",
     keywords:
-      "extrusion machine spares, pipe extrusion machine, 3 layer pipe machine, die head manufacturer, screw barrel set, PVC pipe machinery, CPVC pipe machine, extrusion support Pune",
+      "extrusion machine manufacturer, pipe extrusion machine, 3 layer pipe machine, extrusion machine spares, die head manufacturer, screw barrel set, PVC pipe machinery, CPVC pipe machine, extrusion support Pune",
   },
   "/about": {
-    title: "About Vighnaharta Enterprise | Extrusion Machinery Support",
+    title: "About Vighnaharta Enterprise | Pipe Extrusion Machinery Experts",
     description:
-      "Learn about Vighnaharta Enterprise, a Pune-based extrusion machinery and spares support company serving pipe manufacturers with practical project and process solutions.",
+      "Learn about Vighnaharta Enterprise, a Pune-based extrusion machinery support company serving pipe manufacturers with spares, die heads, project setup and practical process solutions.",
     keywords:
       "about Vighnaharta Enterprise, extrusion machinery company Pune, pipe industry support, extrusion project support, Pankaj Kolhe, Priya Kolhe",
+    schemaType: "AboutPage",
   },
   "/products": {
-    title: "Products | 3-Layer Pipe Machines, Die Heads and Extrusion Spares",
+    title: "3-Layer Pipe Machines, Die Heads, Screw Barrels and Extrusion Spares",
     description:
-      "Explore Vighnaharta Enterprise products including 3-layer pipe automatic machine setups, conical and parallel screw extruders, die heads, screw barrel sets and heavy-duty spares.",
+      "Explore 3-layer pipe automatic machine setups, conical and parallel screw extruders, high-endurance die heads, screw barrel sets, heavy-duty spares and automation support.",
     keywords:
-      "3 layer pipe machine, conical screw extruder, parallel screw extruder, extrusion die head, screw barrel, extrusion spare parts, PVC CPVC pipe machinery",
+      "3 layer pipe machine, PVC pipe machine, CPVC pipe machine, conical screw extruder, parallel screw extruder, extrusion die head, screw barrel, extrusion spare parts",
+    schemaType: "CollectionPage",
   },
   "/services": {
-    title: "Services | Extrusion Machine Setup, Spares and Troubleshooting",
+    title: "Extrusion Machine Services | Setup, Spares, Die Heads and Troubleshooting",
     description:
-      "Get extrusion machinery services for machine project setup, die head design, calibration support, panel modification, spares supply and process troubleshooting.",
+      "Get extrusion machinery services for pipe machine project setup, die head design, calibration support, panel modification, spare supply, automation and process troubleshooting.",
     keywords:
       "extrusion machine service, pipe machine setup, die head design, extrusion troubleshooting, calibration support, panel modification, machine spares",
+    schemaType: "CollectionPage",
   },
   "/industries": {
-    title: "Industries | Pipe Manufacturing and Extrusion Line Support",
+    title: "Industries Served | PVC, CPVC and Plastic Pipe Extrusion Support",
     description:
-      "Vighnaharta Enterprise supports PVC, CPVC, conduit and pipe manufacturing industries with extrusion line spares, machine guidance and process improvement.",
+      "Vighnaharta Enterprise supports PVC, CPVC, conduit and plastic pipe manufacturing industries with extrusion line spares, machine guidance and process improvement.",
     keywords:
       "pipe manufacturing support, PVC pipe industry, CPVC pipe industry, conduit pipe extrusion, extrusion line support, plastic pipe machinery",
   },
   "/contact": {
-    title: "Contact Vighnaharta Enterprise | Extrusion Machinery Inquiry",
+    title: "Contact Vighnaharta Enterprise | Extrusion Machine and Spare Inquiry",
     description:
-      "Contact Vighnaharta Enterprise for extrusion machine spares, die heads, machine setup, screw barrel sets, calibration support and pipe plant modification inquiries.",
+      "Contact Vighnaharta Enterprise for extrusion machine spares, die heads, 3-layer pipe machine setup, screw barrel sets, calibration support and pipe plant modification inquiries.",
     keywords:
       "contact Vighnaharta Enterprise, extrusion machine inquiry, pipe machine spares Pune, die head inquiry, extrusion support contact",
+    schemaType: "ContactPage",
   },
   "/blog": {
     title: "Blog | Extrusion Machine, Spares and Process Insights",
@@ -93,6 +98,16 @@ export function applyRouteSeo(pathname: string, found = true) {
   setMeta("description", page.description);
   setMeta("keywords", page.keywords);
   setMeta("robots", found ? "index, follow, max-image-preview:large" : "noindex, follow");
+  setMeta(
+    "googlebot",
+    found
+      ? "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+      : "noindex, follow",
+  );
+  setMeta("author", SITE_NAME);
+  setMeta("geo.region", "IN-MH");
+  setMeta("geo.placename", "Pune, Maharashtra");
+  setMeta("theme-color", "#062b63");
   setLink("canonical", canonicalUrl);
 
   setProperty("og:type", "website");
@@ -112,7 +127,10 @@ export function applyRouteSeo(pathname: string, found = true) {
 
   setJsonLd("organization-schema", organizationSchema());
   setJsonLd("website-schema", websiteSchema());
+  setJsonLd("breadcrumb-schema", breadcrumbSchema(normalizedPath, canonicalUrl, page));
   setJsonLd("webpage-schema", webPageSchema(page, canonicalUrl));
+  setJsonLd("offer-catalog-schema", offerCatalogSchema());
+  setJsonLd("faq-schema", faqSchema());
 }
 
 function normalizePath(pathname: string) {
@@ -134,7 +152,8 @@ function absoluteUrl(url: string) {
 
 function setMeta(name: string, content: string) {
   const selector = `meta[name="${name}"]`;
-  const meta = document.head.querySelector<HTMLMetaElement>(selector) ?? document.createElement("meta");
+  const meta =
+    document.head.querySelector<HTMLMetaElement>(selector) ?? document.createElement("meta");
   meta.setAttribute("name", name);
   meta.setAttribute("content", content);
   if (!meta.parentElement) document.head.appendChild(meta);
@@ -142,14 +161,17 @@ function setMeta(name: string, content: string) {
 
 function setProperty(property: string, content: string) {
   const selector = `meta[property="${property}"]`;
-  const meta = document.head.querySelector<HTMLMetaElement>(selector) ?? document.createElement("meta");
+  const meta =
+    document.head.querySelector<HTMLMetaElement>(selector) ?? document.createElement("meta");
   meta.setAttribute("property", property);
   meta.setAttribute("content", content);
   if (!meta.parentElement) document.head.appendChild(meta);
 }
 
 function setLink(rel: string, href: string) {
-  const link = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`) ?? document.createElement("link");
+  const link =
+    document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`) ??
+    document.createElement("link");
   link.setAttribute("rel", rel);
   link.setAttribute("href", href);
   if (!link.parentElement) document.head.appendChild(link);
@@ -166,9 +188,10 @@ function setJsonLd(id: string, schema: unknown) {
 function organizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "Organization"],
     "@id": `${getSiteUrl()}/#organization`,
     name: company.name,
+    alternateName: "Vighnaharta Extrusion Technic",
     url: `${getSiteUrl()}/`,
     logo: absoluteUrl(logoImage),
     image: absoluteUrl(previewImage),
@@ -183,6 +206,7 @@ function organizationSchema() {
     },
     areaServed: ["India", "United Arab Emirates"],
     sameAs: [company.linkedin],
+    foundingDate: "2023",
     makesOffer: [
       "Extrusion machine spares",
       "3-layer pipe machine setup",
@@ -210,7 +234,7 @@ function websiteSchema() {
 function webPageSchema(page: SeoPage, url: string) {
   return {
     "@context": "https://schema.org",
-    "@type": "WebPage",
+    "@type": page.schemaType ?? "WebPage",
     "@id": `${url}#webpage`,
     url,
     name: page.title,
@@ -221,5 +245,143 @@ function webPageSchema(page: SeoPage, url: string) {
     about: {
       "@id": `${getSiteUrl()}/#organization`,
     },
+  };
+}
+
+function breadcrumbSchema(pathname: string, url: string, page: SeoPage) {
+  const items = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: `${getSiteUrl()}/`,
+    },
+  ];
+
+  if (pathname !== "/") {
+    items.push({
+      "@type": "ListItem",
+      position: 2,
+      name: page.title.split("|")[0].trim(),
+      item: url,
+    });
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items,
+  };
+}
+
+function offerCatalogSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "@id": `${getSiteUrl()}/#products-services`,
+    name: "Extrusion Machinery Products and Services",
+    url: `${getSiteUrl()}/products`,
+    provider: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+    itemListElement: [
+      productSchema(
+        "3-Layer Pipe Automatic Machine Setup",
+        "Complete project support for PVC and CPVC 3-layer pipe extrusion machine setup with material guidance.",
+      ),
+      productSchema(
+        "High-Endurance Die Heads",
+        "3-layer extrusion die heads designed for efficient pipe production and lower downtime.",
+      ),
+      productSchema(
+        "Screw Barrel Sets",
+        "Conical twin, parallel twin and single screw barrel sets for extrusion lines.",
+      ),
+      serviceSchema(
+        "Extrusion Machine Spares",
+        "Custom extrusion and post-extrusion machine spare support as per customer requirement.",
+      ),
+      serviceSchema(
+        "Calibration and Process Troubleshooting",
+        "Pipe extrusion calibration guidance, machine discussion and process problem support.",
+      ),
+      serviceSchema(
+        "Panel Modification and Automation",
+        "Electrical panel modification and PLC-based remote support for extrusion plants.",
+      ),
+    ],
+  };
+}
+
+function productSchema(name: string, description: string) {
+  return {
+    "@type": "Product",
+    name,
+    description,
+    brand: {
+      "@type": "Brand",
+      name: SITE_NAME,
+    },
+    manufacturer: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+    category: "Plastic Pipe Extrusion Machinery",
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "INR",
+      url: `${getSiteUrl()}/contact`,
+    },
+  };
+}
+
+function serviceSchema(name: string, description: string) {
+  return {
+    "@type": "Service",
+    name,
+    description,
+    provider: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+    areaServed: ["India", "United Arab Emirates"],
+    serviceType: "Extrusion machinery support",
+  };
+}
+
+function faqSchema() {
+  const questions = [
+    {
+      question: "What extrusion products does Vighnaharta Enterprise supply?",
+      answer:
+        "Vighnaharta Enterprise supplies 3-layer pipe automatic machine setups, extrusion die heads, screw barrel sets, conical and parallel screw extruder support, heavy-duty spare parts, calibration support and plant modification solutions.",
+    },
+    {
+      question: "Do you support PVC and CPVC pipe manufacturers?",
+      answer:
+        "Yes. The company supports PVC, CPVC, conduit and plastic pipe manufacturing lines with machine setup, die-head selection, spares and troubleshooting.",
+    },
+    {
+      question: "Can you help with extrusion machine spares as per requirement?",
+      answer:
+        "Yes. Extrusion and post-extrusion machine spares are supplied based on the customer's machine, pipe range, output target and maintenance requirement.",
+    },
+    {
+      question: "Do you provide die-head and calibration support?",
+      answer:
+        "Yes. Vighnaharta Enterprise provides 3-layer die-head design support, VTD die-head model guidance, special calibration dimensions and practical troubleshooting for pipe quality and output stability.",
+    },
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
